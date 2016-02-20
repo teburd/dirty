@@ -1,0 +1,12 @@
+[package]
+name = "dirty"
+version = "0.1.0"
+authors = ["Tom Burdick <thomas.burdick@gmail.com>"]
+description = "Holds a value with a dirty flag which is set on writes and cleared on reads"
+documentation = "https://github.com/bfrog/dirty"
+homepage = "https://github.com/bfrog/dirty"
+repository = "https://github.com/bfrog/dirty"
+readme = "README.md"
+keywords = ["dirty"]
+license = "Apache-2.0"
+license_file = "LICENSE"
