@@ -16,7 +16,7 @@ fi
 
 rev=$(git rev-parse --short HEAD)
 
-cd target/docs
+cd target/doc
 
 echo '<meta http-equiv="refresh" content="0; url=dirty/index.html">' > index.html
 
