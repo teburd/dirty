@@ -24,10 +24,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='index.html'>dirty</a></p><script>window.sidebarCurrent = {name: 'Dirty', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -52,23 +52,25 @@
 lock but simply sets a dirty flag on write(), reset on read()</p>
 </div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;T&gt; <a class='struct' href='../dirty/struct.Dirty.html' title='dirty::Dirty'>Dirty</a>&lt;T&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(val: T) -&gt; <a class='struct' href='../dirty/struct.Dirty.html' title='dirty::Dirty'>Dirty</a>&lt;T&gt;</code></h4>
 <div class='docblock'><p>Create a new Dirty</p>
-</div><h4 id='method.dirty' class='method'><code>fn <a href='#method.dirty' class='fnname'>dirty</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+</div><h4 id='method.dirty' class='method'><code>fn <a href='#method.dirty' class='fnname'>dirty</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <div class='docblock'><p>Returns true if dirty, false otherwise</p>
 </div><h4 id='method.write' class='method'><code>fn <a href='#method.write' class='fnname'>write</a>(&amp;mut self) -&gt; &amp;mut T</code></h4>
 <div class='docblock'><p>Writable value return, sets the dirty flag</p>
 </div><h4 id='method.read' class='method'><code>fn <a href='#method.read' class='fnname'>read</a>(&amp;mut self) -&gt; &amp;T</code></h4>
 <div class='docblock'><p>Read the value and clear the dirty flag if set</p>
-</div><h4 id='method.read_dirty' class='method'><code>fn <a href='#method.read_dirty' class='fnname'>read_dirty</a>(&amp;mut self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;T&gt;</code></h4>
+</div><h4 id='method.read_dirty' class='method'><code>fn <a href='#method.read_dirty' class='fnname'>read_dirty</a>(&amp;mut self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;T&gt;</code></h4>
 <div class='docblock'><p>Read the value only if modified since last read, clears the dirty flag</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -85,7 +87,7 @@ lock but simply sets a dirty flag on write(), reset on read()</p>
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -95,8 +97,8 @@ lock but simply sets a dirty flag on write(), reset on read()</p>
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>typedef</code> (or
-                    <code>tdef</code>).
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
                 </p>
 
                 <p>
@@ -105,7 +107,7 @@ lock but simply sets a dirty flag on write(), reset on read()</p>
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 
