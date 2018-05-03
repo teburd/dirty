@@ -51,10 +51,16 @@ impl<T> Dirty<T> {
     }
 }
 
-impl<T> Deref for Dirty<T>{
+impl<T> Deref for Dirty<T> {
     type Target = T;
     fn deref(&self) -> &T {
         &self.value
+    }
+}
+
+impl<T> Default for Dirty<T> where T: Default {
+    fn default() -> Self {
+        Dirty::new(T::default())
     }
 }
 
@@ -105,6 +111,12 @@ mod tests {
     #[test]
     fn access_inner_deref() {
         let dirty = Dirty::new(0);
+        assert!(*dirty == 0);
+    }
+    
+    #[test]
+    fn default_value() {
+        let dirty = Dirty::<i32>::default();
         assert!(*dirty == 0);
     }
 }
