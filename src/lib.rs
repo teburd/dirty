@@ -1,12 +1,15 @@
+use std::ops::Deref;
+
 /// Dirty wraps a value of type T with functions similiar to that of a Read/Write
-/// lock but simply sets a dirty flag on write(), reset on read()
+/// lock but simply sets a dirty flag on write(), reset on clear().
+/// Use read() or deref (*dirty_variable) to access the inner value.
 pub struct Dirty<T> {
     value: T,
     dirty: bool,
 }
 
 impl<T> Dirty<T> {
-    /// Create a new Dirty
+    /// Create a new Dirty.
     pub fn new(val: T) -> Dirty<T> {
         Dirty {
             value: val,
@@ -14,34 +17,44 @@ impl<T> Dirty<T> {
         }
     }
 
-    /// Returns true if dirty, false otherwise
+    /// Returns true if dirty, false otherwise.
     #[allow(dead_code)]
     pub fn dirty(&self) -> bool {
         self.dirty
     }
 
-    /// Writable value return, sets the dirty flag
+    /// Writable value return, sets the dirty flag.
     pub fn write(&mut self) -> &mut T {
         self.dirty = true;
         &mut self.value
     }
 
-    /// Read the value and clear the dirty flag if set
-    pub fn read(&mut self) -> &T {
-        self.dirty = false;
+    /// Read the value.
+    pub fn read(&self) -> &T {
         &self.value
     }
+    
+    /// Clears the dirty flag.
+    pub fn clear(&mut self) {
+        self.dirty = false;
+    }
 
-    /// Read the value only if modified since last read, clears the dirty flag
+    /// Read the value only if modified since last read.
     #[allow(dead_code)]
-    pub fn read_dirty(&mut self) -> Option<&T> {
+    pub fn read_dirty(&self) -> Option<&T> {
         match self.dirty {
             true => {
-                self.dirty = false;
                 Some(&self.value)
             },
             false => None,
         }
+    }
+}
+
+impl<T> Deref for Dirty<T>{
+    type Target = T;
+    fn deref(&self) -> &T {
+        &self.value
     }
 }
 
@@ -56,17 +69,18 @@ mod tests {
     }
 
     #[test]
-    fn read_clears_flag() {
-        let mut dirty = Dirty::new(0);
+    fn read_doesnt_clears_flag() {
+        let dirty = Dirty::new(0);
         assert!(dirty.dirty() == true);
         assert!(*dirty.read() == 0);
-        assert!(dirty.dirty() == false);
+        assert!(dirty.dirty() == true);
     }
 
     #[test]
     fn write_sets_flag() {
         let mut dirty = Dirty::new(0);
         assert!(*dirty.read() == 0);
+        dirty.clear();
         assert!(dirty.dirty() == false);
         *dirty.write() += 1;
         assert!(dirty.dirty() == true);
@@ -76,14 +90,21 @@ mod tests {
     fn read_dirty() {
         let mut dirty = Dirty::new(0);
         assert!(dirty.read_dirty().is_some());
+		dirty.clear();
         assert!(dirty.dirty() == false);
         assert!(dirty.read_dirty() == None);
         assert!(dirty.dirty() == false);
         *dirty.write() += 1;
         assert!(dirty.dirty() == true);
         assert!(dirty.read_dirty().is_some());
+		dirty.clear();
         assert!(dirty.dirty() == false);
         assert!(dirty.read_dirty() == None);
-        assert!(dirty.dirty() == false);
+    }
+    
+    #[test]
+    fn access_inner_deref() {
+        let dirty = Dirty::new(0);
+        assert!(*dirty == 0);
     }
 }

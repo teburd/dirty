@@ -1,8 +1,8 @@
 [package]
 name = "dirty"
-version = "0.1.1"
+version = "0.2.0"
 authors = ["Tom Burdick <thomas.burdick@gmail.com>"]
-description = "Holds a value with a dirty flag which is set on writes and cleared on reads"
+description = "Holds a value with a dirty flag which is set on writes and cleared on clear()"
 documentation = "https://bfrog.github.io/dirty"
 homepage = "https://github.com/bfrog/dirty"
 repository = "https://github.com/bfrog/dirty"
