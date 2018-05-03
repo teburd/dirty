@@ -18,7 +18,6 @@ impl<T> Dirty<T> {
     }
 
     /// Returns true if dirty, false otherwise.
-    #[allow(dead_code)]
     pub fn dirty(&self) -> bool {
         self.dirty
     }
@@ -40,7 +39,6 @@ impl<T> Dirty<T> {
     }
 
     /// Read the value only if modified since last read.
-    #[allow(dead_code)]
     pub fn read_dirty(&self) -> Option<&T> {
         match self.dirty {
             true => {
@@ -71,15 +69,15 @@ mod tests {
     #[test]
     fn new_dirty() {
         let dirty = Dirty::new(0);
-        assert!(dirty.dirty() == true);
+        assert!(dirty.dirty());
     }
 
     #[test]
-    fn read_doesnt_clears_flag() {
+    fn read_doesnt_clear_flag() {
         let dirty = Dirty::new(0);
-        assert!(dirty.dirty() == true);
+        assert!(dirty.dirty());
         assert!(*dirty.read() == 0);
-        assert!(dirty.dirty() == true);
+        assert!(dirty.dirty());
     }
 
     #[test]
@@ -87,9 +85,9 @@ mod tests {
         let mut dirty = Dirty::new(0);
         assert!(*dirty.read() == 0);
         dirty.clear();
-        assert!(dirty.dirty() == false);
+        assert!(!dirty.dirty());
         *dirty.write() += 1;
-        assert!(dirty.dirty() == true);
+        assert!(dirty.dirty());
     }
 
     #[test]
@@ -97,14 +95,14 @@ mod tests {
         let mut dirty = Dirty::new(0);
         assert!(dirty.read_dirty().is_some());
 		dirty.clear();
-        assert!(dirty.dirty() == false);
+        assert!(!dirty.dirty());
         assert!(dirty.read_dirty() == None);
-        assert!(dirty.dirty() == false);
+        assert!(!dirty.dirty());
         *dirty.write() += 1;
-        assert!(dirty.dirty() == true);
+        assert!(dirty.dirty());
         assert!(dirty.read_dirty().is_some());
 		dirty.clear();
-        assert!(dirty.dirty() == false);
+        assert!(!dirty.dirty());
         assert!(dirty.read_dirty() == None);
     }
     
