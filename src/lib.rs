@@ -41,7 +41,7 @@ impl<T> Dirty<T> {
     pub fn read(&self) -> &T {
         &self.value
     }
-    
+
     /// Clears the dirty flag.
     pub fn clear(&mut self) {
         self.dirty = false;
@@ -50,11 +50,14 @@ impl<T> Dirty<T> {
     /// Read the value only if modified since last read.
     pub fn read_dirty(&self) -> Option<&T> {
         match self.dirty {
-            true => {
-                Some(&self.value)
-            },
+            true => Some(&self.value),
             false => None,
         }
+    }
+
+    /// Consumes the wrapper and returns the enclosed value
+    pub fn unwrap(self) -> T {
+        self.value
     }
 }
 
@@ -103,27 +106,34 @@ mod tests {
     fn read_dirty() {
         let mut dirty = Dirty::new(0);
         assert!(dirty.read_dirty().is_some());
-		dirty.clear();
+        dirty.clear();
         assert!(!dirty.dirty());
         assert!(dirty.read_dirty() == None);
         assert!(!dirty.dirty());
         *dirty.write() += 1;
         assert!(dirty.dirty());
         assert!(dirty.read_dirty().is_some());
-		dirty.clear();
+        dirty.clear();
         assert!(!dirty.dirty());
         assert!(dirty.read_dirty() == None);
     }
-    
+
     #[test]
     fn access_inner_deref() {
         let dirty = Dirty::new(0);
         assert!(*dirty == 0);
     }
-    
+
     #[test]
     fn default_value() {
         let dirty = Dirty::<i32>::default();
         assert!(*dirty == 0);
+    }
+
+    #[test]
+    fn unwrap() {
+        let mut dirty = Dirty::new(100);
+        *dirty.write() = 200;
+        assert_eq!(dirty.unwrap(), 200);
     }
 }
