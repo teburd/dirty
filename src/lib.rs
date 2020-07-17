@@ -77,7 +77,7 @@ mod tests {
 
     #[test]
     fn new_dirty_clean() {
-        let dirty = Dirty::new(0);
+        let dirty = Dirty::new_clean(0);
         assert!(!dirty.dirty());
     }
 
