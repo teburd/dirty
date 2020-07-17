@@ -3,6 +3,7 @@ use std::ops::Deref;
 /// Dirty wraps a value of type T with functions similiar to that of a Read/Write
 /// lock but simply sets a dirty flag on write(), reset on clear().
 /// Use read() or deref (*dirty_variable) to access the inner value.
+#[derive(Copy, Clone, PartialEq, PartialOrd, Eq, Ord, Debug, Default, Hash)]
 pub struct Dirty<T> {
     value: T,
     dirty: bool,
@@ -61,12 +62,6 @@ impl<T> Deref for Dirty<T> {
     type Target = T;
     fn deref(&self) -> &T {
         &self.value
-    }
-}
-
-impl<T> Default for Dirty<T> where T: Default {
-    fn default() -> Self {
-        Dirty::new(T::default())
     }
 }
 
