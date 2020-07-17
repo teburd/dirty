@@ -17,6 +17,14 @@ impl<T> Dirty<T> {
         }
     }
 
+    /// Create a new Dirty with a clear dirty flag.
+    pub fn new_clean(val: T) -> Dirty<T> {
+        Dirty {
+            value: val,
+            dirty: false,
+        }
+    }
+
     /// Returns true if dirty, false otherwise.
     pub fn dirty(&self) -> bool {
         self.dirty
@@ -70,6 +78,12 @@ mod tests {
     fn new_dirty() {
         let dirty = Dirty::new(0);
         assert!(dirty.dirty());
+    }
+
+    #[test]
+    fn new_dirty_clean() {
+        let dirty = Dirty::new(0);
+        assert!(!dirty.dirty());
     }
 
     #[test]
